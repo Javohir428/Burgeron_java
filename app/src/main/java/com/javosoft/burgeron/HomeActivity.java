@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class HomeActivity extends AppCompatActivity
     private boolean isSinglePressed;
 
 
-
     FirebaseRecyclerOptions<Restaurant> options = new FirebaseRecyclerOptions.Builder<Restaurant>()
             .setQuery(FirebaseDatabase.getInstance()
                     .getReference()
@@ -61,9 +61,10 @@ public class HomeActivity extends AppCompatActivity
             Picasso.get().load(model.getImage()).into(viewHolder.img_restaurant);
             viewHolder.setItemClickListener((view, position1, isLongClick) -> {
 
-                Intent categoryList = new Intent(HomeActivity.this, OrdersActivity.class);
+                Intent categoryList = new Intent(HomeActivity.this, CategoryActivity.class);
                 Common.restaurantSelected=adapter.getRef(position1).getKey();
                 startActivity(categoryList);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             });
 
         }
@@ -130,7 +131,7 @@ public class HomeActivity extends AppCompatActivity
 
         if (recyclerView.getAdapter() != null) {
             recyclerView.getAdapter().notifyDataSetChanged();
-            recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_left));
+            recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_right));
 
         }
 
@@ -170,11 +171,6 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
