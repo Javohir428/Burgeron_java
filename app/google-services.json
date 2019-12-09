@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "31305328357",
+    "firebase_url": "https://burgeron-81696.firebaseio.com",
+    "project_id": "burgeron-81696",
+    "storage_bucket": "burgeron-81696.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31305328357:android:0ecac239d79d82b004960c",
+        "android_client_info": {
+          "package_name": "com.javosoft.burgeron"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31305328357-rgp3vl0aa450qonll3hlhfomvs7vo2fh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.javosoft.burgeron",
+            "certificate_hash": "26d2b6a8bd13d1519ade400d7d1232f46168bd66"
+          }
+        },
+        {
+          "client_id": "31305328357-ubp2hcm85aa1csf4co8aio13ij4vr027.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYCxDwtLCiZFqyqgAHht_Pq2VgPpwnB-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31305328357-ubp2hcm85aa1csf4co8aio13ij4vr027.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

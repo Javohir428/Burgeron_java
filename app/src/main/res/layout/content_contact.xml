@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ContactActivity"
+    tools:showIn="@layout/activity_contact"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="ifContentScrolls">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:contentDescription="@string/logo_image"
+                app:srcCompat="@drawable/contact_logo2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/twit"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+
+                    <ImageButton
+                        android:id="@+id/twitter1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@drawable/twitter_button_background"
+                        android:scaleType="centerInside"
+                        android:onClick="twitterOnClick"
+                        android:src="@drawable/ic_twitter"
+                        android:contentDescription="@string/twitter_button"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+                    <ImageButton
+                        android:id="@+id/vk1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="centerInside"
+                        android:onClick="vkOnClick"
+                        android:background="@drawable/vk_button_background"
+                        android:contentDescription="@string/vk_button"
+                        android:src="@drawable/ic_vk" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+                    <ImageButton
+                        android:id="@+id/whatsapp1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="centerInside"
+                        android:onClick="whatsappOnClick"
+                        android:contentDescription="@string/whatsapp_button"
+                        android:background="@drawable/whatsapp_button_background"
+                        android:src="@drawable/ic_whatsapp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+                    <ImageButton
+                        android:id="@+id/telegram1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="centerInside"
+                        android:onClick="telegramOnClick"
+                        android:contentDescription="@string/telegram_button"
+                        android:background="@drawable/telegram_button_background"
+                        android:src="@drawable/ic_telegram" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+                    <ImageButton
+                        android:id="@+id/instagram1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:scaleType="centerInside"
+                        android:onClick="instagramOnClick"
+                        android:background="@drawable/instagram_button_background"
+                        android:src="@drawable/ic_instagram"
+                        android:contentDescription="@string/instagram_button"/>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_with_shadow">
+                    <ImageButton
+                        android:id="@+id/email1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:onClick="emailOnClick"
+                        android:scaleType="centerInside"
+                        android:contentDescription="@string/email_button"
+                        android:background="@drawable/email_button_background"
+                        android:src="@drawable/ic_email" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

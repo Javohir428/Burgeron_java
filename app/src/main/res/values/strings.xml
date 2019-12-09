@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">Burgeron</string>
+    <string name="logo_image">logo image</string>
+    <string name="welcome_background">welcome background image</string>
+    <string name="nameHint">Your Name</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="user_name">Name</string>
+
+    <string name="menu_restaurants">Restaurants</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_contact">Contact</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="restaurant_image_description">Restaurant Image Description</string>
+
+    <string name="instagram_button">Instagram</string>
+    <string name="vk_button">VK</string>
+    <string name="whatsapp_button">Whatsapp</string>
+    <string name="telegram_button">Telegram</string>
+    <string name="email_button">Email</string>
+    <string name="twitter_button">Twitter</string>
+
 </resources>
