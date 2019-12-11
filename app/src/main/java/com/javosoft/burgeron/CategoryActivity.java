@@ -38,7 +38,6 @@ public class CategoryActivity extends AppCompatActivity {
                     .getReference()
                     .child("Restaurants")
                     .child(Common.restaurantSelected)
-                    .child("detail")
                     .child("Category"), Category.class)
             .build();
 
@@ -58,9 +57,10 @@ public class CategoryActivity extends AppCompatActivity {
             Picasso.get().load(model.getImage()).into(viewHolder.img_category);
             viewHolder.setItemClickListener((view, position1, isLongClick) -> {
 
-                Intent categoryList = new Intent(CategoryActivity.this, OrdersActivity.class);
-                Common.categorySelected=adapter.getRef(position1).getKey();
-                startActivity(categoryList);
+                Intent intentFood = new Intent(CategoryActivity.this, FoodActivity.class);
+                intentFood.putExtra("CategoryId", adapter.getRef(position).getKey());
+                startActivity(intentFood);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             });
 
         }
