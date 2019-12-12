@@ -36,6 +36,17 @@
 
     </style>
 
+    <style name="CollapsedAppbar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ExpandedAppbar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/SplashBG</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 
 

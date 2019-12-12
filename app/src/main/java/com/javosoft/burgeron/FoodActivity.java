@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,17 +105,21 @@ public class FoodActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        cart = menu.findItem(R.id.nav_cart);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.nav_cart) {
+            Intent cart = new Intent(FoodActivity.this, CartActivity.class);
+            startActivity(cart);
 
+        }
         return super.onOptionsItemSelected(item);
     }
-
 
     //Helper Method
     private void loadFoods(String categoryId) {
@@ -141,7 +146,7 @@ public class FoodActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         //Sending food_id to FoodDetailActivity
-                        Intent intent = new Intent(FoodActivity.this, OrdersActivity.class);
+                        Intent intent = new Intent(FoodActivity.this, FoodDetailActivity.class);
                         intent.putExtra("foodId", adapter.getRef(position).getKey());
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

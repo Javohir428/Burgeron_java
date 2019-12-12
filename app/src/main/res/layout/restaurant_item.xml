@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/restaurant_image"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/welcome_bg"
@@ -20,8 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/SplashBG"
         android:text="@string/restaurant_image_description"/>
 </LinearLayout>
