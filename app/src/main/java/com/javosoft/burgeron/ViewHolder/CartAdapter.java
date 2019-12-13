@@ -1,25 +1,16 @@
 package com.javosoft.burgeron.ViewHolder;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.javosoft.burgeron.CartActivity;
 import com.javosoft.burgeron.Database.Database;
-import com.javosoft.burgeron.Interface.ItemClickListener;
 import com.javosoft.burgeron.R;
 import com.javosoft.burgeron.model.Order;
 import com.squareup.picasso.Picasso;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +18,6 @@ import java.util.Locale;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
-
     private List<Order> listData = new ArrayList<>();
     private CartActivity cart;
 
@@ -46,7 +36,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-
         Picasso.get().load(listData.get(position)
                 .getImage()).resize(70,70)
                 .centerCrop()

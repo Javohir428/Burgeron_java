@@ -2,6 +2,7 @@ package com.javosoft.burgeron.ViewHolder;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public TextView txt_food_name;
     public ImageView img_food;
-    public Button quick_add_button;
+    public ImageButton quick_add_button;
 
     private ItemClickListener itemClickListener;
     public FoodViewHolder(View itemView) {

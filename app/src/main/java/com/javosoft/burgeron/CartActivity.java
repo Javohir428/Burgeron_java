@@ -29,6 +29,7 @@ import com.javosoft.burgeron.ViewHolder.CartAdapter;
 import com.javosoft.burgeron.ViewHolder.CartViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Order;
+import com.javosoft.burgeron.model.Request;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     RelativeLayout rootLayout;
     public TextView txtTotalPrice;
-    Button btnPlace;
+    Button btnGenerate;
 
 
     List<Order> cart = new ArrayList<>();
@@ -81,13 +82,26 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
 
         txtTotalPrice = (TextView)findViewById(R.id.total);
-        btnPlace = (Button)findViewById(R.id.btnGenerate);
+        btnGenerate = (Button)findViewById(R.id.btnGenerate);
 
-        btnPlace.setOnClickListener(new View.OnClickListener() {
+        btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Request request = new Request(
+                        Common.currentUser.getPhone(),
+                        Common.currentUser.getName(),
+                        txtTotalPrice.getText().toString(),
+                        cart
+                );
+
+                requests.child(String.valueOf(System.currentTimeMillis()))
+                        .setValue(request);
+
+                new Database(getBaseContext()).cleanCart();
+                finish();
             }
         });
+
         loadListFood();
     }
 

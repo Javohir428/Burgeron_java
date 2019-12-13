@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_margin="5dp"
     android:layout_height="200dp"
@@ -51,14 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/addBtnCart"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/SplashBG"
-        android:gravity="center_horizontal"
-        android:drawableBottom="@drawable/ic_add_black_24dp"/>
+        android:background="@android:color/holo_green_light"
+        android:gravity="center"
+        android:src="@drawable/ic_add_black_24dp"
+        tools:ignore="ContentDescription" />
 </LinearLayout>
