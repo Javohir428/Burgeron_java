@@ -12,64 +12,65 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.javosoft.burgeron.CartActivity;
+import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.Interface.ItemClickListener;
 import com.javosoft.burgeron.R;
 import com.javosoft.burgeron.model.Order;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-    public TextView txt_cart_name,txt_price;
-    public ImageView img_cart_count;
-
-    private ItemClickListener itemClickListener;
-
-    public void setTxt_cart_name(TextView txt_cart_name) {
-        this.txt_cart_name = txt_cart_name;
-    }
-
-    public CartViewHolder(View itemView) {
-        super(itemView);
-
-        txt_cart_name = itemView.findViewById(R.id.cart_item_name);
-        txt_price = itemView.findViewById(R.id.cart_item_price);
-        img_cart_count = itemView.findViewById(R.id.cart_item_count);
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-}
-
-
 
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
 
     private List<Order> listData = new ArrayList<>();
-    private Context context;
+    private CartActivity cart;
 
-    public CartAdapter(List<Order> listData, Context context) {
+    public CartAdapter(List<Order> listData, CartActivity cart) {
         this.listData = listData;
-        this.context = context;
+        this.cart = cart;
     }
 
     @NonNull
     @Override
     public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(cart);
         View itemView = inflater.inflate(R.layout.cart_item,parent,false);
         return new CartViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        TextDrawable drawable = TextDrawable.builder().buildRound(""+listData.get(position).getQuantity(), Color.RED);
-        holder.img_cart_count.setImageDrawable(drawable);
+
+        Picasso.get().load(listData.get(position)
+                .getImage()).resize(70,70)
+                .centerCrop()
+                .into(holder.cart_image);
+
+        holder.btn_quantity.setNumber(listData.get(position).getQuantity());
+        holder.btn_quantity.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+            @Override
+            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+                Order order = listData.get(position);
+                order.setQuantity(String.valueOf(newValue));
+                new Database(cart).updateCart(order);
+
+                //total price
+                float total = 0;
+                List<Order> orders = new Database(cart).getCarts();
+                for(Order item:orders)
+                    total+=(Float.parseFloat(order.getPrice()))*(Float.parseFloat(item.getQuantity()));
+                Locale locale = new Locale("en","US");
+                NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+
+                cart.txtTotalPrice.setText(fmt.format(total));
+            }
+        });
 
         Locale locale = new Locale("en","US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
@@ -82,5 +83,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    public Order getItem(int position){
+        return listData.get(position);
+    }
+
+    public void removeItem(int position){
+        listData.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Order item,int position){
+        listData.add(position, item);
+        notifyItemInserted(position);
     }
 }

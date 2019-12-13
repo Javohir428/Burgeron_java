@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.UserModel;
+import com.muddzdev.styleabletoast.StyleableToast;
+
 import java.util.Arrays;
 import java.util.List;
 import dmax.dialog.SpotsDialog;
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setPositiveButton("REGISTER", (dialogInterface, i ) -> {
             if (TextUtils.isEmpty(edt_name.getText().toString())){
-                Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT, R.style.RegisterToast).show();
                 overridePendingTransition(0, 0);
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
                 overridePendingTransition(0, 0);
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
                             dialogInterface.dismiss();
-                            Toast.makeText(MainActivity.this, "Congratulation! Register success", Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(MainActivity.this, "Congratulation! Register success", Toast.LENGTH_SHORT, R.style.CartAddToast).show();
 
                             goToHomeActivity(userModel);
                         }

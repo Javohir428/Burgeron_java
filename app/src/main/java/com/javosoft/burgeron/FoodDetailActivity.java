@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +22,7 @@ import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Food;
 import com.javosoft.burgeron.model.Order;
+import com.muddzdev.styleabletoast.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 public class FoodDetailActivity extends AppCompatActivity {
@@ -72,9 +72,10 @@ public class FoodDetailActivity extends AppCompatActivity {
                     foodId,
                     currentFood.getName(),
                     numberButton.getNumber(),
-                    currentFood.getPrice()
+                    currentFood.getPrice(),
+                    currentFood.getImage()
             ));
-            Toast.makeText(FoodDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+            StyleableToast.makeText(FoodDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT, R.style.CartAddToast).show();
         });
 
 

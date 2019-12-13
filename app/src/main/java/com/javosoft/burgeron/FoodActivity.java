@@ -25,10 +25,13 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.Interface.ItemClickListener;
 import com.javosoft.burgeron.ViewHolder.FoodViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Food;
+import com.javosoft.burgeron.model.Order;
+import com.muddzdev.styleabletoast.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 public class FoodActivity extends AppCompatActivity {
@@ -40,7 +43,6 @@ public class FoodActivity extends AppCompatActivity {
     RecyclerView recycler_food;
     String categoryId;
     private MenuItem cart;
-
 
 
     @Override
@@ -74,10 +76,10 @@ public class FoodActivity extends AppCompatActivity {
 
 
         //get categoryId from intent passed from HomeActivity
-        if (getIntent() != null){
+        if (getIntent() != null) {
             categoryId = getIntent().getStringExtra("CategoryId");
         }
-        if (!categoryId.isEmpty() && categoryId == null){
+        if (!categoryId.isEmpty() && categoryId == null) {
             loadFoods(categoryId);
         }
 
@@ -91,7 +93,7 @@ public class FoodActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (Common.isInternetAvailable(getBaseContext())){
+                if (Common.isInternetAvailable(getBaseContext())) {
                     adapter.stopListening();
                     loadFoods(categoryId);
                     adapter.startListening();
@@ -116,6 +118,7 @@ public class FoodActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.nav_cart) {
             Intent cart = new Intent(FoodActivity.this, CartActivity.class);
             startActivity(cart);
+            overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
 
         }
         return super.onOptionsItemSelected(item);
@@ -137,10 +140,31 @@ public class FoodActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull FoodViewHolder holder, final int position, @NonNull final Food model) {
                 TextView textViewName = holder.itemView.findViewById(R.id.food_name);
+                TextView textViewPrice = holder.itemView.findViewById(R.id.food_list_price);
                 ImageView imageView = holder.itemView.findViewById(R.id.food_image);
 
                 textViewName.setText(model.getName());
+                textViewPrice.setText(model.getPrice());
                 Picasso.get().load(model.getImage()).into(imageView);
+
+                holder.quick_add_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean isFoodInCart = new Database(getBaseContext()).checkFood(adapter.getRef(position).getKey());
+                        if (!isFoodInCart) {
+                            new Database(getBaseContext()).addToCart(new Order(
+                                    adapter.getRef(position).getKey(),
+                                    model.getName(),
+                                    "1",
+                                    model.getPrice(),
+                                    model.getImage()
+                            ));
+                        } else {
+                            new Database(getBaseContext()).increaseCart(adapter.getRef(position).getKey());
+                        }
+                        StyleableToast.makeText(FoodActivity.this, "Added to Cart", Toast.LENGTH_SHORT, R.style.CartAddToast).show();
+                    }
+                });
 
                 holder.setItemClickListener(new ItemClickListener() {
                     @Override
@@ -152,6 +176,7 @@ public class FoodActivity extends AppCompatActivity {
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 });
+
 
             }
         };
@@ -166,11 +191,6 @@ public class FoodActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
 
     @Override
     public void onBackPressed() {

@@ -122,8 +122,7 @@
                         app:textSize="8sp"
                         app:backGroundColor="@color/SplashBG"
                         app:initialNumber="1"
-                        app:finalNumber="20"
-                        >
+                        app:finalNumber="20">
 
                     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 

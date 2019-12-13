@@ -26,9 +26,11 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.ViewHolder.RestaurantViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Restaurant;
+import com.muddzdev.styleabletoast.StyleableToast;
 import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity
@@ -100,19 +102,25 @@ public class HomeActivity extends AppCompatActivity
                 android.R.color.holo_blue_dark
         );
         swipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) () -> {
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             if(Common.isInternetAvailable(getBaseContext())) {
                 loadRestaurant();
             }
             else {
-                Toast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT, R.style.RegisterToast).show();
             }
         });
         swipeRefreshLayout.post(() ->{
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
             if(Common.isInternetAvailable(getBaseContext())) {
                 loadRestaurant();
             }
             else {
-                Toast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT, R.style.RegisterToast).show();
             }
         });
 
@@ -141,6 +149,8 @@ public class HomeActivity extends AppCompatActivity
     protected void onStop(){
         super.onStop();
         adapter.stopListening();
+        Database db = new Database(getBaseContext());
+        db.cleanCart();
 
     }
 
@@ -151,21 +161,26 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Database db = new Database(getBaseContext());
+        db.cleanCart();
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-
-        if(isSinglePressed  )
-        {
-            super.onBackPressed();
-        }
-        else
-        {
-            isSinglePressed = true;
-            Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(() -> isSinglePressed = false,2000);
+        else {
+            if (isSinglePressed) {
+                super.onBackPressed();
+            } else {
+                isSinglePressed = true;
+                Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(() -> isSinglePressed = false, 2000);
+            }
         }
 
 
