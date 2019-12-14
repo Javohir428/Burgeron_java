@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +67,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         database = FirebaseDatabase.getInstance();
         requests = database.getReference("Orders");
 
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.multimedia_rollover_057);
 
         rootLayout = findViewById(R.id.rootLayout);
 
@@ -102,6 +104,8 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                 String key = requests.push().getKey();
 
                 requests.child(key).setValue(request);
+
+                mp.start();
 
                 Intent intentQR = new Intent(CartActivity.this, QrActivity.class);
                 intentQR.putExtra("QR_key", key);
