@@ -26,6 +26,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.javosoft.burgeron.Database.Database;
+import com.javosoft.burgeron.Interface.ItemClickListener;
 import com.javosoft.burgeron.ViewHolder.FoodViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Food;
@@ -50,7 +51,7 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
 
         getWindow().setStatusBarColor(Color.parseColor("#D00113"));
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Foods");
         setSupportActionBar(toolbar);
 
@@ -74,7 +75,6 @@ public class FoodActivity extends AppCompatActivity {
                 .child("Foods");
 
 
-        //get categoryId from intent passed from HomeActivity
         if (getIntent() != null) {
             categoryId = getIntent().getStringExtra("CategoryId");
         }
@@ -89,14 +89,17 @@ public class FoodActivity extends AppCompatActivity {
 
         loadFoods(categoryId);
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            if (Common.isInternetAvailable(getBaseContext())) {
-                adapter.stopListening();
-                loadFoods(categoryId);
-                adapter.startListening();
-                swipeRefreshLayout.setRefreshing(false);
-            } else {
-                Toast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (Common.isInternetAvailable(getBaseContext())) {
+                    adapter.stopListening();
+                    loadFoods(categoryId);
+                    adapter.startListening();
+                    swipeRefreshLayout.setRefreshing(false);
+                } else {
+                    Toast.makeText(getBaseContext(), "Please check your connection!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -162,12 +165,15 @@ public class FoodActivity extends AppCompatActivity {
                     }
                 });
 
-                holder.setItemClickListener((view, position1, isLongClick) -> {
-                    //Sending food_id to FoodDetailActivity
-                    Intent intent = new Intent(FoodActivity.this, FoodDetailActivity.class);
-                    intent.putExtra("foodId", adapter.getRef(position1).getKey());
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                holder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        //Sending food_id to FoodDetailActivity
+                        Intent intent = new Intent(FoodActivity.this, FoodDetailActivity.class);
+                        intent.putExtra("foodId", adapter.getRef(position).getKey());
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
                 });
 
 

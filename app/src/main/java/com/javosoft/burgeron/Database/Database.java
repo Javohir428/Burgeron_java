@@ -14,10 +14,8 @@ import java.util.List;
 public class Database extends SQLiteAssetHelper {
 
 
-
-
     private static final String DB_NAME = "BurgeronDB.db";
-    private static final int DB_VER=2;
+    private static final int DB_VER=5;
 
     public Database(Context context) {
         super(context, DB_NAME, null, DB_VER);
@@ -42,7 +40,7 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect={"ID", "ProductName", "ProductID", "Quantity", "Price", "Image"};
+        String[] sqlSelect={"ID", "ProductID", "ProductName", "Quantity", "Price", "Image"};
         String sqlTable="OrderDetail";
 
         qb.setTables(sqlTable);
@@ -70,7 +68,6 @@ public class Database extends SQLiteAssetHelper {
                 order.getQuantity(),
                 order.getPrice(),
                 order.getImage());
-
         db.execSQL(query);
     }
 
@@ -82,13 +79,13 @@ public class Database extends SQLiteAssetHelper {
 
     public void updateCart(Order order) {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("UPDATE OrderDetail SET Quantity= %s WHERE ID = %d", order.getQuantity(), order.getID());
+        String query = String.format("UPDATE OrderDetail SET Quantity = %s WHERE ID = %d", order.getQuantity(), order.getID());
         db.execSQL(query);
     }
 
     public void increaseCart(String foodId) {
         SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("UPDATE OrderDetail SET Quantity = Quantity+1 WHERE ProductId = %s", foodId);
+        String query = String.format("UPDATE OrderDetail SET Quantity = Quantity + 1 WHERE ProductId = %s", foodId);
         db.execSQL(query);
     }
 

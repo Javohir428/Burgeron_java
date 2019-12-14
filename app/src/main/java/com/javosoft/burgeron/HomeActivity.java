@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,12 +192,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_orders) {
-            Intent ordersIntent = new Intent(HomeActivity.this, OrdersActivity.class);
-            startActivity(ordersIntent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-        } else if (id == R.id.nav_contact)  {
+        if (id == R.id.nav_contact)  {
             Intent contactIntent = new Intent(HomeActivity.this, ContactActivity.class);
             startActivity(contactIntent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

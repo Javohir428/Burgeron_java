@@ -46,7 +46,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
 
         getWindow().setStatusBarColor(Color.parseColor("#D00113"));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -68,13 +68,19 @@ public class FoodDetailActivity extends AppCompatActivity {
         btncart = findViewById(R.id.btncart);
 
         btncart.setOnClickListener(view -> {
-            new Database(getBaseContext()).addToCart(new Order(
-                    foodId,
-                    currentFood.getName(),
-                    numberButton.getNumber(),
-                    currentFood.getPrice(),
-                    currentFood.getImage()
-            ));
+            boolean isFoodInCart = new Database(getBaseContext()).checkFood(foodId);
+            if (!isFoodInCart){
+                new Database(getBaseContext()).addToCart(new Order(
+                        foodId,
+                        currentFood.getName(),
+                        numberButton.getNumber(),
+                        currentFood.getPrice(),
+                        currentFood.getImage()
+                ));
+            } else {
+                new Database(getBaseContext()).increaseCart(foodId);
+            }
+
             StyleableToast.makeText(FoodDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT, R.style.CartAddToast).show();
         });
 

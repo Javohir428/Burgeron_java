@@ -5,23 +5,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
-import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.Helper.RecyclerItemTouchHelper;
 import com.javosoft.burgeron.Interface.RecyclerItemTouchHelperListener;
@@ -30,9 +27,10 @@ import com.javosoft.burgeron.ViewHolder.CartViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Order;
 import com.javosoft.burgeron.model.Request;
-
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,6 +71,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
         //Init
 
+
         recyclerView = (RecyclerView)findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -87,15 +86,26 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date(System.currentTimeMillis()));
+
+
                 Request request = new Request(
                         Common.currentUser.getPhone(),
                         Common.currentUser.getName(),
                         txtTotalPrice.getText().toString(),
+                        currentDateandTime,
+                        Common.restaurantSelected,
                         cart
                 );
+                String key = requests.push().getKey();
 
-                requests.child(String.valueOf(System.currentTimeMillis()))
-                        .setValue(request);
+                requests.child(key).setValue(request);
+
+                Intent intentQR = new Intent(CartActivity.this, QrActivity.class);
+                intentQR.putExtra("QR_key", key);
+                startActivity(intentQR);
 
                 new Database(getBaseContext()).cleanCart();
                 finish();

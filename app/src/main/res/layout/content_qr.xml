@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".OrdersActivity"
-    tools:showIn="@layout/activity_orders">
+    tools:context=".QrActivity"
+    tools:showIn="@layout/activity_qr">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blackWithOpacity">
+        android:background="@color/SplashBG">
 
         <ImageView
             android:id="@+id/imageView"
@@ -21,6 +21,20 @@
             android:contentDescription="@string/logo_image"
             android:layout_gravity="center_horizontal"
             app:srcCompat="@drawable/r_logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/qr_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/logo_image"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/r_logo" />
+
+        </LinearLayout>
 
     </FrameLayout>
 
