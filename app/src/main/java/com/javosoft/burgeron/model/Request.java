@@ -7,17 +7,17 @@ public class Request {
     private String name;
     private String total;
     private String date;
-    private String restaurantID;
+    private String restaurantName;
     private List<Order> foods;
 
     public Request(){}
 
-    public Request(String phone, String name, String total, String date, String restaurantID, List<Order> foods) {
+    public Request(String phone, String name, String total, String date, String restaurantName, List<Order> foods) {
         this.phone = phone;
         this.name = name;
         this.total = total;
         this.date = date;
-        this.restaurantID = restaurantID;
+        this.restaurantName = restaurantName;
         this.foods = foods;
     }
 
@@ -61,11 +61,11 @@ public class Request {
         this.total = total;
     }
 
-    public String getRestaurantID() {
-        return restaurantID;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestaurantID(String restaurantID) {
-        this.restaurantID = restaurantID;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }

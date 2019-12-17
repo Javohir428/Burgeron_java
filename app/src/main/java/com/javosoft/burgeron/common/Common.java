@@ -12,6 +12,7 @@ public class Common {
     public static UserModel currentUser;
     public static String restaurantSelected = "";
     public static String categorySelected = "";
+    public static String currentRestaurantName = "";
 
 
     public static boolean isInternetAvailable(Context context) {

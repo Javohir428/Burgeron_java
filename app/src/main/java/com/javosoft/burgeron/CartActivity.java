@@ -67,14 +67,14 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         database = FirebaseDatabase.getInstance();
         requests = database.getReference("Orders");
 
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.multimedia_rollover_057);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.multimedia_rollover_068);
 
         rootLayout = findViewById(R.id.rootLayout);
 
         //Init
 
 
-        recyclerView = (RecyclerView)findViewById(R.id.listCart);
+        recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -98,7 +98,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                         Common.currentUser.getName(),
                         txtTotalPrice.getText().toString(),
                         currentDateandTime,
-                        Common.restaurantSelected,
+                        Common.currentRestaurantName,
                         cart
                 );
                 String key = requests.push().getKey();

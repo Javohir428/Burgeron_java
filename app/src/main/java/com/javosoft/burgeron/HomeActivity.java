@@ -64,6 +64,7 @@ public class HomeActivity extends AppCompatActivity
 
                 Intent categoryList = new Intent(HomeActivity.this, CategoryActivity.class);
                 Common.restaurantSelected=adapter.getRef(position1).getKey();
+                Common.currentRestaurantName=adapter.getItem(position1).getName();
                 startActivity(categoryList);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             });
