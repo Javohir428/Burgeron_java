@@ -29,7 +29,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <TextView
-                android:text="Total:"
+                android:text="Total: $"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/SplashBG"
@@ -40,7 +40,6 @@
                 android:id="@+id/total"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                android:layout_marginStart="5dp"
                 android:textColor="@color/SplashBG"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

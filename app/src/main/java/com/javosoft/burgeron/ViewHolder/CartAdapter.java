@@ -11,6 +11,10 @@ import com.javosoft.burgeron.Database.Database;
 import com.javosoft.burgeron.R;
 import com.javosoft.burgeron.model.Order;
 import com.squareup.picasso.Picasso;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,21 +54,35 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
                 new Database(cart).updateCart(order);
 
                 //total price
-                float total = 0;
+                double total = 0;
                 List<Order> orders = new Database(cart).getCarts();
                 for(Order item:orders)
-                    total+=(Float.parseFloat(order.getPrice()))*(Float.parseFloat(item.getQuantity()));
-                Locale locale = new Locale("en","US");
-                NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                    total+=(Double.parseDouble(item.getPrice())) * (Integer.parseInt(item.getQuantity()));
+                BigDecimal resultRounded = new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP);
 
-                cart.txtTotalPrice.setText(fmt.format(total));
+                DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+                DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+                symbols.setCurrencySymbol("");
+                formatter.setDecimalFormatSymbols(symbols);
+
+                cart.txtTotalPrice.setText(formatter.format(resultRounded));
+
+
+                Locale locale = new Locale("en","US");
+                NumberFormat ft = NumberFormat.getCurrencyInstance(locale);
+                double price = (Double.parseDouble(listData.get(position).getPrice()))*(Integer.parseInt(listData.get(position).getQuantity()));
+                BigDecimal resultPriceRounded = new BigDecimal(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+                holder.txt_price.setText(ft.format(resultPriceRounded));
+                holder.txt_cart_name.setText(listData.get(position).getProductName());
+
             }
         });
 
         Locale locale = new Locale("en","US");
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-        float price = (Float.parseFloat(listData.get(position).getPrice()))*(Float.parseFloat(listData.get(position).getQuantity()));
-        holder.txt_price.setText(fmt.format(price));
+        double price = (Double.parseDouble(listData.get(position).getPrice()))*(Integer.parseInt(listData.get(position).getQuantity()));
+        BigDecimal resultPriceRounded = new BigDecimal(price).setScale(2, BigDecimal.ROUND_HALF_UP);
+        holder.txt_price.setText(fmt.format(resultPriceRounded));
         holder.txt_cart_name.setText(listData.get(position).getProductName());
 
     }

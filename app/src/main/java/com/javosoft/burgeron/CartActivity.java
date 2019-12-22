@@ -28,6 +28,10 @@ import com.javosoft.burgeron.ViewHolder.CartViewHolder;
 import com.javosoft.burgeron.common.Common;
 import com.javosoft.burgeron.model.Order;
 import com.javosoft.burgeron.model.Request;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -127,13 +131,17 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         recyclerView.setAdapter(adapter);
 
         //total price
-        float total = 0;
+        double total = 0;
         for(Order order:cart)
-            total+=(Float.parseFloat(order.getPrice()))*(Float.parseFloat(order.getQuantity()));
-        Locale locale = new Locale("en","US");
-        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+            total+=(Double.parseDouble(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
 
-        txtTotalPrice.setText(fmt.format(total));
+        BigDecimal resultRounded = new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+        DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+        symbols.setCurrencySymbol("");
+        formatter.setDecimalFormatSymbols(symbols);
+
+        txtTotalPrice.setText(formatter.format(resultRounded));
 
     }
 
@@ -163,14 +171,18 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             adapter.removeItem(deleteIndex);
             new Database(getBaseContext()).removeFromCart(deleteItem.getProductId());
 
-            float total = 0;
+            double total = 0;
             List<Order> orders = new Database(getBaseContext()).getCarts();
             for(Order item:orders)
-                total+=(Float.parseFloat(item.getPrice()))*(Float.parseFloat(item.getQuantity()));
-            Locale locale = new Locale("en","US");
-            NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                total+=(Double.parseDouble(item.getPrice()))*(Integer.parseInt(item.getQuantity()));
 
-            txtTotalPrice.setText(fmt.format(total));
+            BigDecimal resultRounded = new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+            DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+            DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+            symbols.setCurrencySymbol("");
+            formatter.setDecimalFormatSymbols(symbols);
+
+            txtTotalPrice.setText(formatter.format(resultRounded));
 
             Snackbar snackbar = Snackbar.make(rootLayout, name + " removed from cart!", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
@@ -183,11 +195,15 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                     float total = 0;
                     List<Order> orders = new Database(getBaseContext()).getCarts();
                     for(Order item:orders)
-                        total+=(Float.parseFloat(item.getPrice()))*(Float.parseFloat(item.getQuantity()));
-                    Locale locale = new Locale("en","US");
-                    NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
+                        total+=(Double.parseDouble(item.getPrice()))*(Integer.parseInt(item.getQuantity()));
 
-                    txtTotalPrice.setText(fmt.format(total));
+                    BigDecimal resultRounded = new BigDecimal(total).setScale(2, BigDecimal.ROUND_HALF_UP);
+                    DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+                    DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+                    symbols.setCurrencySymbol("");
+                    formatter.setDecimalFormatSymbols(symbols);
+
+                    txtTotalPrice.setText(formatter.format(resultRounded));
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);
